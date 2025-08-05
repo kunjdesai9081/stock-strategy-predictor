@@ -1,5 +1,5 @@
 // Replace 'YOUR_API_KEY' with your actual Alpha Vantage API key
-const apiKey = 'YOUR_API_KEY'; // Your API key here
+const apiKey = '6S6G04WAEILWEHTT'; // Your API key here
 
 document.getElementById('activate-strategy').addEventListener('click', function() {
     // Get the selected stock symbol from the dropdown
