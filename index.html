@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Strategy Predictor</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
@@ -12,21 +15,29 @@
         <h2>"Customizable Technical Setup"</h2>
         
         <div class="controls">
-            <select id="symbol">
+            <select id="symbol" style="width: 200px;">
                 <option value="AAPL">AAPL</option>
                 <option value="GOOGL">GOOGL</option>
                 <option value="MSFT">MSFT</option>
+                <option value="AMZN">AMZN</option>
+                <option value="TSLA">TSLA</option>
+                <option value="FB">FB</option>
+                <option value="NFLX">NFLX</option>
+                <option value="NVDA">NVDA</option>
                 <!-- Add more symbols as needed -->
             </select>
-            <select id="interval">
-                <option value="5min">5 Min</option>
-                <option value="15min">15 Min</option>
-                <option value="30min">30 Min</option>
+            <select id="type">
+                <option value="intraday">Intraday</option>
+                <option value="equity">Equity</option>
+                <option value="fno">FNO</option>
             </select>
             <input type="date" id="date-range">
+            <input type="number" id="risk-percentage" placeholder="Risk %">
         </div>
 
-        <div id="chart"></div>
+        <div id="chart-container">
+            <canvas id="stockChart"></canvas>
+        </div>
 
         <div class="settings-panel">
             <h3>Strategy Settings Panel</h3>
@@ -47,5 +58,10 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#symbol').select2(); // Initialize Select2 for searchable dropdown
+        });
+    </script>
 </body>
 </html>
