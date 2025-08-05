@@ -1,0 +1,26 @@
+body {
+    background-color: #121212;
+    color: #f0e68c;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.controls, .settings-panel, .risk-management-panel {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #f0e68c;
+    border-radius: 5px;
+}
+
+input, select {
+    margin: 5px;
+}
