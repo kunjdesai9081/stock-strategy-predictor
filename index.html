@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Strategy Predictor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>STOCK STRATEGY PREDICTOR</h1>
+        <h2>"Customizable Technical Setup"</h2>
+        
+        <div class="controls">
+            <select id="symbol">
+                <option value="AAPL">AAPL</option>
+                <option value="GOOGL">GOOGL</option>
+                <option value="MSFT">MSFT</option>
+            </select>
+            <select id="interval">
+                <option value="5min">5 Min</option>
+                <option value="15min">15 Min</option>
+                <option value="30min">30 Min</option>
+            </select>
+            <input type="date" id="date-range">
+        </div>
+
+        <div id="chart"></div>
+
+        <div class="settings-panel">
+            <h3>Strategy Settings Panel</h3>
+            <label>RSI Period: <input type="number" value="14" id="rsi-period"></label>
+            <label>CCI Period: <input type="number" value="20" id="cci-period"></label>
+            <label>ADX Period: <input type="number" value="20" id="adx-period"></label>
+            <button id="activate-strategy">Activate Strategy</button>
+        </div>
+
+        <div class="risk-management-panel">
+            <h3>Risk Management Panel</h3>
+            <label>Risk per trade: <input type="number" value="1" id="risk-per-trade"></label>
+            <label>Stop Loss: <input type="number" value="2" id="stop-loss"></label>
+            <label>Target: <input type="number" value="4" id="target"></label>
+        </div>
+
+        <div id="strategy-output"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
