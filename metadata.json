@@ -1,0 +1,6 @@
+{
+  "name": "Stock prediction.io",
+  "description": "NSE/BSE Indian Stock Market Real-Time AI Price Target & Ensemble ML Prediction Studio.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
