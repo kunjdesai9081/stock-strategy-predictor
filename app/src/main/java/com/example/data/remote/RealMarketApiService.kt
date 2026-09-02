@@ -41,8 +41,8 @@ data class RealNewsResult(
 class RealMarketApiService {
 
     private val okHttpClient = OkHttpClient.Builder()
-        .connectTimeout(12, TimeUnit.SECONDS)
-        .readTimeout(12, TimeUnit.SECONDS)
+        .connectTimeout(10, TimeUnit.SECONDS)
+        .readTimeout(10, TimeUnit.SECONDS)
         .followRedirects(true)
         .build()
 

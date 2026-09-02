@@ -83,7 +83,7 @@ fun AiDeepDiveScreen(
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
                 Column(modifier = Modifier.padding(20.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                         Box(
                             modifier = Modifier
                                 .size(34.dp)
@@ -93,9 +93,9 @@ fun AiDeepDiveScreen(
                             Icon(Icons.Default.Psychology, contentDescription = null, tint = AiPurple, modifier = Modifier.size(18.dp))
                         }
                         Spacer(modifier = Modifier.width(10.dp))
-                        Column {
-                            Text("Gemini AI Dalal Street Analyst", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
-                            Text("Model: gemini-2.5-flash", fontSize = 11.sp, color = TextMuted)
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Gemini AI Dalal Street Analyst", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = TextPrimary, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                            Text("Model: gemini-1.5-flash", fontSize = 11.sp, color = TextMuted)
                         }
                     }
 
@@ -172,10 +172,10 @@ fun AiDeepDiveScreen(
                     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                 ) {
                     Column(modifier = Modifier.padding(20.dp)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
                             Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = SecondaryCyan, modifier = Modifier.size(18.dp))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Dalal Street AI Deep-Dive Rationale ($selectedSymbol)", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = TextPrimary)
+                            Text("Dalal Street AI Deep-Dive Rationale ($selectedSymbol)", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = TextPrimary, modifier = Modifier.weight(1f), maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
                         }
 
                         Spacer(modifier = Modifier.height(12.dp))
@@ -186,7 +186,7 @@ fun AiDeepDiveScreen(
                             border = androidx.compose.foundation.BorderStroke(1.dp, BentoBorder)
                         ) {
                             Text(
-                                text = reportText,
+                                text = reportText.replace("**", "").replace("### ", "").replace("## ", ""),
                                 fontSize = 13.sp,
                                 color = TextSecondary,
                                 lineHeight = 19.sp,

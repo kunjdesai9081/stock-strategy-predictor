@@ -151,16 +151,15 @@ class StockViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshPrediction() {
-        viewModelScope.launch {
-            _isRefreshing.value = true
-            loadStockDataAsync(_selectedSymbol.value)
-            _isRefreshing.value = false
-        }
+        loadStockDataAsync(_selectedSymbol.value)
     }
 
     fun setApiKey(key: String) {
         _userApiKey.value = key
+        _alphaVantageKey.value = key
+        _yahooFinanceKey.value = key
         triggerGeminiNewsAnalysis()
+        loadStockDataAsync(_selectedSymbol.value)
     }
 
     fun setAlphaVantageKey(key: String) {
@@ -202,6 +201,7 @@ class StockViewModel(application: Application) : AndroidViewModel(application) {
     private fun loadStockDataAsync(symbol: String) {
         viewModelScope.launch {
             _isLoadingStock.value = true
+            _isRefreshing.value = true
             val exchange = _selectedExchange.value
             val avKey = _alphaVantageKey.value
 
@@ -230,6 +230,7 @@ class StockViewModel(application: Application) : AndroidViewModel(application) {
             checkWatchlistStatus(symbol)
             _aiReport.value = null
             _isLoadingStock.value = false
+            _isRefreshing.value = false
         }
     }
 
@@ -330,7 +331,8 @@ class StockViewModel(application: Application) : AndroidViewModel(application) {
                 currentPrice = ticker.currentPrice,
                 rsi = tech.rsi,
                 macd = tech.macd,
-                horizonDays = horizon
+                horizonDays = horizon,
+                apiKeyOverride = _userApiKey.value
             )
             _aiReport.value = report
             _isAiLoading.value = false

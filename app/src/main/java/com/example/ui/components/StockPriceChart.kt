@@ -3,6 +3,7 @@ package com.example.ui.components
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
@@ -87,7 +89,7 @@ fun StockPriceChart(
         Column(modifier = Modifier.padding(18.dp)) {
             // Top Toolbar: Chart type & Subchart toggles
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -116,7 +118,7 @@ fun StockPriceChart(
                         modifier = Modifier.testTag("chip_line")
                     )
                 }
-
+                Spacer(modifier = Modifier.width(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     FilterChip(
                         selected = subChartType == "MACD",
@@ -155,7 +157,8 @@ fun StockPriceChart(
                         color = TextMuted,
                         fontWeight = FontWeight.Bold
                     )
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.horizontalScroll(rememberScrollState())) {
                         Text("O: ₹${String.format("%.1f", c.open)}", fontSize = 11.sp, color = TextSecondary)
                         Text("H: ₹${String.format("%.1f", c.high)}", fontSize = 11.sp, color = BullishGreen, fontWeight = FontWeight.Bold)
                         Text("L: ₹${String.format("%.1f", c.low)}", fontSize = 11.sp, color = BearishRed, fontWeight = FontWeight.Bold)

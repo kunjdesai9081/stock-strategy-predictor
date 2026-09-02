@@ -60,6 +60,8 @@ import com.example.ui.theme.SecondaryCyan
 import com.example.ui.theme.TextMuted
 import com.example.ui.theme.TextPrimary
 import com.example.ui.theme.TextSecondary
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
 
 @Composable
 fun EnsembleBreakdownCard(
@@ -153,16 +155,23 @@ fun EnsembleBreakdownCard(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-            // Horizon Picker Bar (7d, 14d, 30d)
+            // Horizon Picker Bar (1d, 7d, 30d, 1y)
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                listOf(7, 14, 30).forEach { days ->
+                listOf(1, 7, 30, 365).forEach { days ->
+                    val label = when(days) {
+                        1 -> "1d Target"
+                        7 -> "7d Target"
+                        30 -> "30d Target"
+                        365 -> "1y Target"
+                        else -> "${days}d Target"
+                    }
                     FilterChip(
                         selected = horizonDays == days,
                         onClick = { onHorizonChanged(days) },
-                        label = { Text("$days-Day Target", fontSize = 12.sp, fontWeight = FontWeight.Bold) },
+                        label = { Text(label, fontSize = 12.sp, fontWeight = FontWeight.Bold) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = PrimaryBlue.copy(alpha = 0.18f),
                             selectedLabelColor = PrimaryBlue

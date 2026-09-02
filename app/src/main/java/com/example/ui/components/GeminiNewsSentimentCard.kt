@@ -84,7 +84,7 @@ fun GeminiNewsSentimentCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)) {
                     Box(
                         modifier = Modifier
                             .size(38.dp)
@@ -104,22 +104,27 @@ fun GeminiNewsSentimentCard(
                         )
                     }
                     Spacer(modifier = Modifier.width(12.dp))
-                    Column {
+                    Column(modifier = Modifier.weight(1f)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = "Gemini AI News Sentiment",
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = TextPrimary
+                                color = TextPrimary,
+                                maxLines = 1,
+                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                             )
                         }
                         Text(
                             text = "LLM Headline Signal Extraction",
                             fontSize = 11.sp,
-                            color = TextMuted
+                            color = TextMuted,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                         )
                     }
                 }
+                Spacer(modifier = Modifier.width(8.dp))
 
                 // Mode Badge: DEMO MODE or LIVE API MODE
                 val isLive = analysis?.isLiveApi == true && isLiveApiMode
@@ -145,7 +150,9 @@ fun GeminiNewsSentimentCard(
                             text = if (isLive) "LIVE API MODE" else "DEMO MODE",
                             fontSize = 10.sp,
                             fontWeight = FontWeight.ExtraBold,
-                            color = if (isLive) BullishGreen else NeutralGold
+                            color = if (isLive) BullishGreen else NeutralGold,
+                            maxLines = 1,
+                            softWrap = false
                         )
                     }
                 }

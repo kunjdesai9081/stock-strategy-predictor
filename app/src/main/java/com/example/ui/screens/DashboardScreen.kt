@@ -3,8 +3,10 @@ package com.example.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -306,8 +308,11 @@ fun DashboardScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.horizontalScroll(rememberScrollState())
+                            ) {
                                 Text(
                                     text = activeTicker.symbol,
                                     fontSize = 26.sp,
@@ -316,14 +321,14 @@ fun DashboardScreen(
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Surface(
-                                    color = if (activeTicker.isLiveMarketData) BullishGreen.copy(alpha = 0.15f) else BentoSurfaceVariant,
+                                    color = if (activeTicker.isLiveMarketData) BullishGreen.copy(alpha = 0.15f) else NeutralGold.copy(alpha = 0.15f),
                                     shape = RoundedCornerShape(8.dp),
-                                    border = androidx.compose.foundation.BorderStroke(1.dp, if (activeTicker.isLiveMarketData) BullishGreen.copy(alpha = 0.4f) else BentoBorder)
+                                    border = androidx.compose.foundation.BorderStroke(1.dp, if (activeTicker.isLiveMarketData) BullishGreen.copy(alpha = 0.4f) else NeutralGold.copy(alpha = 0.6f))
                                 ) {
                                     Text(
-                                        text = if (activeTicker.isLiveMarketData) "LIVE QUOTE" else "CACHED",
+                                        text = if (activeTicker.isLiveMarketData) "LIVE QUOTE" else "OFFLINE MODE",
                                         fontSize = 9.sp,
-                                        color = if (activeTicker.isLiveMarketData) BullishGreen else TextMuted,
+                                        color = if (activeTicker.isLiveMarketData) BullishGreen else NeutralGold,
                                         fontWeight = FontWeight.ExtraBold,
                                         modifier = Modifier.padding(horizontal = 7.dp, vertical = 3.dp)
                                     )
@@ -358,7 +363,9 @@ fun DashboardScreen(
                             Text(
                                 text = activeTicker.companyName,
                                 fontSize = 13.sp,
-                                color = TextMuted
+                                color = TextMuted,
+                                maxLines = 1,
+                                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                             )
                         }
 

@@ -34,7 +34,7 @@ class GeminiStockService {
         }
 
         try {
-            val url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$apiKey"
+            val url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$apiKey"
             val headlinesPrompt = articles.joinToString("\n") { "- ${it.headline} (Source: ${it.source})" }
             
             val promptText = """
@@ -44,18 +44,18 @@ class GeminiStockService {
                 Headlines:
                 $headlinesPrompt
                 
-                Perform a precise sentiment calculation. Respond strictly with JSON format:
+                Perform a precise sentiment calculation. Respond strictly with a valid JSON object matching this example schema exactly:
                 {
-                  "overallSentiment": "BULLISH" or "BEARISH" or "NEUTRAL",
-                  "sentimentScore": <float between -1.0 and +1.0>,
-                  "confidencePct": <integer between 0 and 100>,
-                  "rationaleSummary": "<2 sentence concise rationale>",
+                  "overallSentiment": "BULLISH",
+                  "sentimentScore": 0.85,
+                  "confidencePct": 92,
+                  "rationaleSummary": "Write your 2 sentence concise rationale here.",
                   "items": [
                     {
-                      "headline": "<headline text>",
-                      "sentiment": "BULLISH" or "BEARISH" or "NEUTRAL",
-                      "score": <float between -1.0 and 1.0>,
-                      "explanation": "<1 line short reason>"
+                      "headline": "Exact headline text here",
+                      "sentiment": "BULLISH",
+                      "score": 0.8,
+                      "explanation": "Short 1 line reason here"
                     }
                   ]
                 }
@@ -195,15 +195,16 @@ class GeminiStockService {
         currentPrice: Double,
         rsi: Float,
         macd: Float,
-        horizonDays: Int
+        horizonDays: Int,
+        apiKeyOverride: String = ""
     ): String = withContext(Dispatchers.IO) {
-        val apiKey = BuildConfig.GEMINI_API_KEY
+        val apiKey = if (apiKeyOverride.isNotBlank()) apiKeyOverride else BuildConfig.GEMINI_API_KEY
         if (apiKey.isBlank() || apiKey == "MY_GEMINI_API_KEY") {
             return@withContext getOfflineAiAnalysis(symbol, currentPrice, rsi, macd, horizonDays)
         }
 
         try {
-            val url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$apiKey"
+            val url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=$apiKey"
             
             val promptText = """
                 You are a senior quantitative stock analyst specializing in the Indian stock market (NSE / BSE).
@@ -213,7 +214,7 @@ class GeminiStockService {
                 1. 📈 Technical & Momentum Signal (RSI & MACD analysis on NSE/BSE chart)
                 2. 🤖 Hybrid Model Target Rationale (LSTM sequence + XGBoost + FinBERT sentiment blending)
                 3. ⚠️ Macro Catalysts & Key Risk Factors (Dalal Street sentiment, RBI interest rate stance, FII/DII capital flows, sector earnings)
-                Keep formatting readable with bullet points.
+                IMPORTANT: Do NOT use markdown syntax like asterisks (**) or hashes (###). Use plain text, spacing, and emojis only.
             """.trimIndent()
 
             val requestJson = JSONObject().apply {
